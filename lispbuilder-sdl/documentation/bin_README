@@ -1,0 +1,29 @@
+03/07/2006
+
+Description:
+-----------
+This ASDF installable package includes the SDL binaries for win32. The SDL binaries are 
+distributed as a part of Lispbuilder as a convenience.
+
+Please note that unlike Lispbuilder which uses the BSD license, the SDL library falls under the LGPL. 
+Please see the included LGPL (in COPYING) for licensing information.
+
+The source code for SDL can be retrieved from http://www.libsdl.org
+
+SDL version 1.2.9 is included in this package. 
+Sam Lantinga <slouken@libsdl.org> is the author of SDL.
+
+Installation:
+------------
+The binary can be installed in two ways:
+1) lispbuilder-sdl-binaries is an ASDF installable package. To install, simply:
+	(asdf:operate 'asdf:load-op :lispbuilder-sdl-binaries)
+
+2) or, copy SDL.dll into a location on your HDD. 
+
+As a default, the function that loads the SDL.dll will search 
+"asdf:*central-registry*\site\lispbuilder-sdl-binaries\" for the binary. 
+
+If (1) is used to install the binary then SDL.dll should be found and loaded automatically.
+If (2) is used to install, then see the README in the lispbuilder-sdl package
+for instructions on how to make CFFI load the binary from a specific location.

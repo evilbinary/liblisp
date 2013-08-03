@@ -1,0 +1,56 @@
+03/06/2006
+
+Description:
+-----------
+This ASDF installable package includes the SDL_gfx binaries for win32. The SDL_gfx binaries are 
+distributed as a part of Lispbuilder as a convenience (for Linux users) and as a Hail Mary (for Windows users) 
+as this binary is a PITA to compile for the Win32 platform.
+
+Please note that unlike Lispbuilder which uses the BSD license, the SDL_gfx library falls under the LGPL. 
+Please see the included LGPL for licensing information.
+
+The source code for SDL_gfx can be retrieved from http://www.ferzkopp.net/Software/SDL_gfx-2.0/
+
+SDL_gfx version 2.0.13 is included in this package. The author of SDL_gfx is 
+Andreas Schiffler <aschiffler@appwares.com>
+
+Installation:
+------------
+The binary can be installed in two ways:
+1) lispbuilder-sdl-gfx-binaries is an ASDF installable package. To install, simply:
+	(asdf:operate 'asdf:load-op :lispbuilder-sdl-gfx-binaries)
+
+2) or, copy SDL_gfx.dll into a location on your HDD. 
+
+As a default, the function that loads the SDL_gfx.dll will search 
+"asdf:*central-registry*\site\lispbuilder-sdl-binaries\" for the binary. 
+
+If (1) is used to install the binary then SDL_gfx.dll should be found and loaded automatically.
+If (2) is used to install, then see the README in the lispbuilder-sdl-gfx package
+for instructions on how to make CFFI load the binary from a specific location.
+
+Compiling under Win32
+---------------------
+Frank Buss created the following make file that allows SDL_gfx to be compiled under Windows
+using the MinGW compiler. The following should be placed into a makeFile 'Makefile'. The binary 
+can then be built by calling make.
+
+#------------------
+
+CFLAGS = -O3 -DBUILD_DLL -DWIN32 -I/usr/local/include/SDL
+LIBS = -L/usr/local/lib -lSDL
+
+OBJS = SDL_framerate.o SDL_gfxPrimitives.o SDL_imageFilter.o SDL_rotozoom.o
+
+IMPORT_LIB=libSDL_gfx.dll.a
+SHARED_LIB=SDL_gfx.dll
+
+all: $(SHARED_LIB)
+
+$(SHARED_LIB): $(OBJS)
+gcc -s -shared -o $@ \
+$^ -Wl,--enable-auto-import,--export-all \
+-Wl,--out-implib=$(IMPORT_LIB) \
+$(LIBS)
+
+#------------------
